@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    A feladatban szerettem volna össze hasonlítani különböző programozási nyelvek reqex csomagjait. Első körben kiválasztottam, hogy mely nyelveket szeretném használni. Ezek a nyelvek a Python, Java valamint a JavaScript lettek, mivel ezeket a nyelveket már ismertem és így volt ismeretem a használatukhoz.  Ahhoz hogy csomagjaikat tesztelni tudjam, be kellet szereznem valamit, amin utána a program vizsgálni, tudja a reguláris kifejezéseket. Ez egy <a href="Windows_2k.log" target="Windows_2k.log"> "Windows_2k" </a> névre hallgató log fájl lett ami kétezer sort tartalmaz.
+    <br>
+    A vizsgálathoz továbbá kellet még kitalálnom reguláris kifejezéseket is melyeket utána megírtam mindegyik nyelv csomagjához tartozó szintaxissal. Ehhez öt darab kifejezést találtam ki melyek a következők:
+    <ul>
+        <li>Az adott sor „2019-09-29”-el kezdődik-e?</li>
+        <li>Az adott sor „]”-re végződik-e?</li>
+        <li>Az adott sor tartalmaz-e „C” „egy darab bármilyen karakter” „S” szórészletet?</li>
+        <li>Az adott sor tartalmazza-e az „attribute” szót?</li>
+        <li>Az adott sor tartalmaz-e legalább egy „y” betűt?</li>
+      </ul>
+    <h1>Fútató környezetek és csomagok</h1>
+    <h2>Python</h2>
+    A Pythonhoz fútató környezetnek a JetBrains PyCharm Community Editon-t választottam ezt töltöttem le és telepítettem, valamint a Python 3.7 es verzióját használtam. A feladat kivitelezéséhez a Python „re” névre hallgató csomagját importáltam be. Ennek a csomagnak több funkciója is van én a sima „search” funkciót használtam. Ez a funkció végig fut a megadott Stringen és megkeresi, hogy van-e a megadott reguláris kifejezésnek megfelelő elem, és ha van, visszaadja a Stringben található pozícióját, ha pedig nincs egyezés -1 értékkel tér vissza. A csomag további funkciójával lehet a reguláris kifejezéssel egyező részeket más Stringre cserélni. 
+    <h2>Java</h2>
+    A Java-nál futtató környezetnek a IntelliJ IDEA Community Editiont valamint a JDK 10.0.6-os verzióját használtam. A feladathoz importálnom kellet Java.io.File, Java.io.FileNot.FoundException és a Java.util.Scanner csomagokat. ezek a log file beolvasásában nyújtanak segítséget. A reguláris kifejezésekhez a Java.util.regex.Matcher valamint a Java.util.regex.Pattern csomagok beimportálására volt szükség. A kér csomagot együtt használtam. A Pattern csomag segítségével lehet megadni a reguláris kifejezést és utána a Matcher csomag segítségével lehet ellenőrizni hogy a kifejezés igaz vagy hamis a megadott Stringre. 
+    <h2>JavaScript</h2>
+    A JavaScript-nél fútató környezetnek a Visual Studio Code-ot használtam. Szükség volt még a Node.js telepítésére, amelynek a 14.06.0 verzióját használtam. Csomagokból az „fs”  névre hallgató csomagot telepítettem, amelyre azért volt szükség, hogy be tudjam olvasni a log fájlt. A reguláris kifejezések ellenőrzéséhez nem kellet további csomagot importálnom.
+    <h1>Log fájl beolvasása</h1>
+    A log fájl beolvasása Pythonban 2 sorban valósult meg. Megadtam egy változóban a log fájl elérési útját. Majd soronként beolvasta azt a porgram és egy tömb-ben eltárolásra kerül. Ezután a vizsgálatoknál már csak egy for each ciklust kell végig futtatni a tömb elemein. <br>
+    <img src=".\pics\1.png"><br>
+    Java-ban ez már egy hosszabb program rész. A beolvasáshoz a már korábban említett három csomag importálására is szükség van. Itt a fájl nem kerül eltárolásra, amikor beolvas, egy sort a program akkor azon lefuttatja a reguláris kifejezéseket, majd tovább lép a következő sorra. Valamint az egész rész egy try blokkban van a hibára futás esélye miatt. És ha a program hibára futna a catch blokk segítségével hibát is dob a felhasználónak.<br>
+    <img src=".\pics\2.png"><br>
+    <img src=".\pics\3.png"><br>
+    JavaScript-nél az fs programcsomag segítségével kerül beimportálásra a fájl. itt megadtam a log fájl elérési útját és a kódolást ami UTF8. Ezután eltárolásra kerül egy log nevű változóban, majd a következő sorban egy reguláris kifejezés segítségével soronként tördelem a szöveget és így kerül eltárolásra. A regláris kifejezés: /[\r\n]+/g. Ez a kifejezés megkeresi, hogy a .log fájlban hol volt egy adott sor vége és ott vágja el a szöveget és kezdődik a tömb következő eleme.<br>
+    <img src=".\pics\4.png"><br>
+    <h1>Első vizsgálat</h1>
+    Az első vizsgálat arra vonatkozik, hogy a log fájl-ban hány darab sor kezdődik „2016-09-29”-el. Python-nál ezt úgy végeztem el, hogy az „x” nevű változóban eltárolom az „re” csomag „search” függvényének visszatérési értékét. A függvénynek kettő paramétert kell megadni az első a reguláris kifejezés a második a vizsgálandó szöveg. A reguláris kifejezésnél a „^” jel azt takarja, hogy az ez után megadott rész a szöveg elején legyen megtalálható. Ha a szövegrészlet, ami jelen esetben a log fájl bizonyos sora megfelel ennek akkor az „x” változó értéket kap, ha nem akkor pedig nem kap értéket. Amennyiben az „x” kap értéket az „elso” változó értéke meg nő egyel.<br>
+    <img src=".\pics\5.png"><br>
+    Java-nál első lépésnél létre hozom a Pattern-t ami a reguláris kifejezés. Itt teljessen hasonlóan a Phyton-hoz kell megadni a reguláris kifejezést, „^” jel majd a vizsgált szöveg, amit szeretnénk, hogy a vizsgált szöveg elején legyen. Ezután a Matcher függvényt lefuttatom az előzőleg létre hozott Pattern-en és megadom, hogy melyik szövegen vizsgálja meg ezt. A megadott data változóban a log fájl egy-egy sora található. A Matcher függvény egy true  vagy false értékkel tér vissza, ezt az értéket megvizsgáltam és ha true érték volt akkor az „elso” névre hallgató változó értékét egyel növeltem. <br>
+    <img src=".\pics\6.png"><br>
+    A JavaScript-nél a „lines” nevű tömb egy-egy elemét vizsgálom ami a log fájl egy-egy sora. A serch függvényt hívom meg rá és paraméterben megadom a reguláris kifejezést. A szintaxis itt eltér a másik két programtól mivel itt „\b” majd a kifejezés amivel szeretnénk, hogy vizsgáljon. Itt a search függvény visszaadja a pozícióját, ahol talált ilyen egyezést a sor elején. Ha van találat ez egy 0-nál nagyobb szám jelen pillanatban mivel a sor elejét vizsgáljuk ez a szám 0 találatkor. Ha viszont nem talál egyezést -1 értékkel tér vissza. Megvizsgáltam hogy a vissza térés nagyobb egyenlő-e mint nulla és ha igen az „elso” változóértéke egyel nőt. <br>
+    <img src=".\pics\7.png"><br>
+    Az első vizsgálatra kapott eredmények előbb Python majd Java végül JavaScript nyelvnél: <br>
+    <img src=".\pics\8.png"><br>
+    <img src=".\pics\9.png"><br>
+    <img src=".\pics\10.png"><br>
+    Mint a képeken is látható mind a három nyelven ugyan azt az értéket kaptam vissza.<br>
+    <h1>Második vizsgálat</h1>
+    A második vizsgálatnál azt néztem, hogy hány sor végződik „]”-re. Python-nál ezt úgy végeztem el, hogy az „y” nevű változóban eltárolom az „re” csomag „search” függvényének visszatérési értékét. Függvény paraméterének megadom a "]$" kifejezést. A „$” jel azt jelenti, hogy az ez elött álló kifejezést fogja keresni a szöveg végén a függvény. Valamint paraméterként szintén megadtam, hogy melyik szövegen végezze el az ellenőrzést. Amennyiben az y változó kap értéket a „masodik” számú változó értéke egyel megnő. <br>
+    <img src=".\pics\11.png"><br>
+    Java-nál szintén létrehoztam egy Pattern-t mint az előző vizsgálatnál. A Pattern-ben megadott reguláris kifejezés szintaxisa megegyezik it is mint az első feladatban a Python szintaxisával. Meghívtam a Pattern-re a Matcher függvényt megadtam a data-ban a szövegrészletet és megvizsgáltam a visszatérési értékét. Ha true volt az érték, akkor a „masodik” változó értékét növeltem egyel. <br>
+    <img src=".\pics\12.png"><br>
+    A JavaScript-nél csak úgy mint az első vizsgálatnál, it is más szintaxist kellet használnom. A kifejezés amit megadtam a „/]\b/i” volt. Mivel a \b a perjelek végén van és van előtte kifejezés, ezért azt a kifejezést a szöveg végén fogja keresni, és ha talál, egyezést vissza adja a keresett kifejezés pozícióját a szövegben. Ha ez nagyobb egyenlő mint 0 akkor a „masodik” változó értékét növeltem egyel. <br>
+    <img src=".\pics\13.png"><br>
+    A második vizsgálatra kapott eredmények előbb Python majd Java végül JavaScript nyelvnél:<br>
+    <img src=".\pics\14.png"><br>
+    <img src=".\pics\15.png"><br>
+    <img src=".\pics\16.png"><br>
+    Az első nagy különbség a három nyelv között itt látható. A JavaScript nem tudja értelmezni, ha szöveg végén vagy elején írásjelet keresünk. Csak betük és számok azonosítására lehet használni. Ezért míg a Python és a Java visszaadta, hogy 474 sor végződik „]” –re addig a JavaScript nem adott vissza egy sort sem. <br>
+    <h1>Harmadik vizsgálat</h1>
+    A harmadik vizsgálatnál azt néztem, hogy hány sor tartalmaz „C” „egy darab bármilyen karakter” és „S” kifejezést. Pythonnál Szokásosan meghívtam az „re” csomag „search” függvényét, amelynek megadtam paraméterében a reguláris kifejezést és a vizsgált szöveget. A reguláris kifejezés a :”C.S” volt. Itt a „.” karakter egy darab bármilyen karaktert takar, ami nem szóköz. A kifejezés érzékeny a kis és nagybetűkre. Majd megvizsgáltam, hogy a „z” változó kapott-e értéket és ha igen akkor a „harmadik” változó értékét egyel növeltem. <br>
+    <img src=".\pics\17.png"><br>
+    Java-nál ennek a reguláris kifejezésnek a szintaxis megint megegyezik a Python-nál lévőével. A Pattern-nak megadtam a kifejezést, majd meghívtam rá a Matcher függvényt és megvizsgáltam milyen értéket ad vissza. Ha a visszaadott érték true akkor a „harmadik” változó értékét növeltem egyel. A kifejezés itt is kis és nagybetű érzékeny. <br>
+    <img src=".\pics\18.png"><br>
+    A JavaScript-nél is ugyan azt a reguláris kifejezést adtam meg. Mivel a „.” karakter itt is egy darab tetszőleges betűt takar, ami nem szóköz. Az eltérés annyi volt, hogy míg Python-nál és Java-nál idéző jelek között kell megadni a kifejezést addig JavaScriptnél perjelek között. A kifejezés itt is kis és nagybetű érzékeny. <br>
+    <img src=".\pics\19.png"><br>
+    A harmadik vizsgálatra kapott eredmények előbb Python majd Java végül JavaScript nyelvnél:<br>
+    <img src=".\pics\20.png"><br>
+    <img src=".\pics\21.png"><br>
+    <img src=".\pics\22.png"><br>
+    Mind a három nyelvnél ugyan azt az eredményt kaptam vissza.<br>
+    <h1>Negyedik vizsgálat</h1>
+    A negyedik vizsgálatnál azt vizsgáltam a kifejezés tartalmazza-e az „atributte” szót. Pythonnál ehhez meghivtam az „re” csomag „search” függvényét melynek paraméterének meg adtam idézőjelek között az „atributte” szót. A függvény megnézte található-e ilyen a megadott szövegben és visszatért a poziciójával vagy -1 értékkel. Ha az érték nagyobb volt mint -1 akkor a „negyedik” változó értékét egyel növeltem. <br>
+    <img src=".\pics\23.png"><br>
+    Java-nál a szintaxis ugyan az mint Pythonnál. létrehozta a Pattern-t aminek megadtam kifejezésnek az alábbi reguláris kifejezést: „attribute”. Majd meghívtam rá a Matcher függvényt és a megadtam a vizsgálandó szöveget. Ha volt egyezés akkor a „negyedik” változó értékét növeltem egyel. Ez a kifejezés nem volt érzékeny kis és nagybetűkre. <br>
+    <img src=".\pics\24.png"><br>
+    JavaScript-nél ugyan úgy adtam meg a kifejezést, mint az előző két nyelvnél. Arra kellet figyelnem, hogy itt nem idézőjelek között, hanem perjelek között kellet megadnom a kifejezést. A perjel után írt i betű biztosítsa, hogy nem lesz kis és nagybetű érzékeny a keresés.<br>
+    <img src=".\pics\25.png"><br>
+    A negyedik vizsgálatra kapott eredmények előbb Python majd Java végül JavaScript nyelvnél:<br>
+    <img src=".\pics\26.png"><br>
+    <img src=".\pics\27.png"><br>
+    <img src=".\pics\28.png"><br>
+    A negyedik vizsgálatnál is mind a három nyelvnél, ugyan azt az értéket kaptam vissza. <br>
+    <h1>Ötödik vizsgálat</h1>
+    Az ötödik vizsgálatnál azt néztem, hány olyan sor van, amely tartalmaz legalább egy y betűt. Pythonnál ezt úgy értem el hogy meghívtam az „re” csomag „search” függvényét és paraméterben megadtam a „y+” reguláris kifejezést. Ez az vizsgálta, hogy a szöveg tartalmaz-e legalább egy de akár több y betűt. Ellenőriztem értékkel tér-e vissza, ha igen akkor az „otodik” változó értékét egyel növeltem. <br>
+    <img src=".\pics\29.png"><br>
+    Java-nál a Python-hoz hasonlóan az „y+” reguláris kifejezést kellet megadnom. Létre hoztam a Pattern-t, majd meghívtam rá a Matcher függvényt és megnéztem milyen értékkel tért vissza, ha az érték true volt, akkor az „otodik” változó értékét egyel növeltem. <br>
+    <img src=".\pics\30.png"><br>
+    JavaScript-nél ugyan úgy a „+” karakter határozta meg hogy egy vagy több y legyen a szövegben ahhoz, hogy megfeleljen a reguláris kifejezésnek. A per jel utáni kis i betű miatt lett mindegy, hogy az y kis vagy nagy betű formájában jelenik meg a szövegben. Ha volt találat akkor az „otodik” változó értékét egyel növeltem. <br>
+    <img src=".\pics\31.png"><br>
+    Az ötödik vizsgálatra kapott eredmények előbb Python majd Java végül JavaScript nyelvnél:<br>
+    <img src=".\pics\32.png"><br>
+    <img src=".\pics\33.png"><br>
+    <img src=".\pics\34.png"><br>
+    Ennél a vizsgálatnál is azonos értéket adott vissza mind a három programozási nyelv, 1215 olyan sor volt a log fájlban amely tartalmazott legalább egy darab y betűt.<br>
+    <h1>Összegzés</h1>
+    A vizsgálatok alapján bár mindegyik nyelv alkalmas a reguláris kifejezések ellenőrzésére, engem meglepett, hogy a JavaScript nem ismer fel minden karaktert. Megpróbáltam a „]” kívül más karakterre is lefuttatni a keresést, mint például a „.”, melyről tudtam, hogy van olyan sor, amelyik arra végződik a JavaScript mégsem találta meg azt.<br>
+    Szintaxisukat tekintve a Python és a Java megegyeznek. Mindkét nyelvnél idézőjelek között kell megadni a reguláris kifejezéseket és a reguláris kifejezéseknél a karakterek ugyan azt jelentik mindkét nyelvnél. Ellenben a JavaScriptnél a kifejezéseket nem idézőjelek között, hanem perjelek között kell megadni, valamint a kifejezésben lévő karakterek jelentése is eltérhet a másik két nyelvétől<br>
+    A kód hosszúságában a Python és a JavaScript amelyek kevesebb sort igényelnek. A log fájl beolvasásához kettő sorra van szükség valamint a reguláris kifejezés vizsgálata is bele fér egy sorba további sorokra a visszatérési érték vizsgálata miatt van szükség. Java-nál a fájl beolvasása is több sorban történik, valamint mindenképpen létre kell hoznunk egy Pattern-t amiben megadjuk a reguláris kifejezést. És csak egy másik sorban tudjuk meghívni rá a Matcher függvényt és megadni a vizsgálandó szöveget.<br>
+    A teljesítményt nézve nálam leglassabban a JavaScript futott le bár a futási sebesség nem számottevő, mivel a log fájl csak 2000 sorból állt. Sebességben ezt követte a Java amelynél bár a fájl nem került eltárolásra, hanem mikor beolvasta azt a program egyből elvégezte rajta mind az 5 vizsgálatot,  így is valamivel lassabb volt mint a Python, amelynél a fájl eltárolásra kerül és csak utána futnak le rajta a vizsgálatok. A log fájl mérete lehet, hogy befolyásolta a futási sebességet, lehet ,ha egy százszor ekkora logfájlon vizsgálódok, akkor a Java fut le leggyorsabban mivel ott csak egyszer nézi végig a szöveget a program. De ezzel a log fájlal nálam a legnagyobb teljesítményt a Python érte el. <br>
+    Ha választanom kellene ezek alapján, hogy melyik programozási nyelvet használnám reguláris kifejezésekhez a Pythont választanám.<br>
+    
+
+</body>
+</html>
